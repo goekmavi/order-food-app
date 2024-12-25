@@ -22,6 +22,9 @@ import { RouterLink, RouterView } from 'vue-router'
     .header {
         max-width: 1200px;
         margin: 2rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         &__headline {
             font-size: 2rem;
@@ -37,6 +40,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
         &__list-item-anchor {
             font-size: 1.4rem;
+            color: black;
+            font-size: 1.2rem;
         }
     }
 </style>

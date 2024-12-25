@@ -1,17 +1,13 @@
 <script setup lang="ts">
+import FoodCard, { type FoodCardType } from '@/components/FoodCard.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
-type Food = {
-    id: number
-    name: string
-}
 
 const route = useRoute();
 const router = useRouter();
 
 const id = route.params.id;
-const food = ref<Food | null>(null)
+const food = ref<FoodCardType | null>(null)
 
 const fetchFood = async () => {
     try {
@@ -22,7 +18,13 @@ const fetchFood = async () => {
         }
 
         const data = await response.json()
-        food.value = { id: data.id, name: data.name };
+
+        food.value = {
+            Headline: data.name,
+            Image: data.image,
+            Id: data.id,
+            Rating: data.rating
+        };
     } catch {
         router.push("/404")
     }
@@ -34,12 +36,21 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="food">
-        <h2>{{ food.name }}</h2>
-        <span>{{ food.id }}</span>
-    </template>
+    <div class="food-detail-view" v-if="food">
+        <FoodCard class="food-detail-view__food-card" v-bind="food" />
+        <button class="food-detail-view__button">Add to cart</button>
+    </div>
 </template>
   
-<style>
+<style lang="scss">
+    .food-detail-view {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+
+        &__food-card {
+            flex-basis: 50%;
+        }
+    }
 </style>
   

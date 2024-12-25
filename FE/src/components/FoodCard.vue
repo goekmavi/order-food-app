@@ -2,30 +2,32 @@
 import { RouterLink } from 'vue-router';
 
 export type FoodCardType = {
-    headline: string,
-    image: string,
-    id: number,
-    rating: number,
-    anchor: string
+    Headline: string,
+    Image: string,
+    Id: number,
+    Rating: number,
+    Anchor?: string
 }
 
 defineProps<FoodCardType>();
 </script>
 
 <template>
-    <RouterLink class="food-card" :to="anchor">
+    <component :is="Anchor ? 'RouterLink' : 'div'" class="food-card" :to="Anchor">
         <article class="food-card__wrapper">
-            <img class="food-card__image" :src="image" :alt="headline" />
-            <h3 class="food-card__headline">{{ headline }}</h3>
-            <span class="food-card__rating">{{ rating }}</span>
+            <img class="food-card__image" :src="Image" :alt="Headline" />
+            <h3 class="food-card__headline">{{ Headline }}</h3>
+            <span class="food-card__rating">{{ Rating }}</span>
         </article>
-    </RouterLink>
+    </component>
 </template>
 
 <style lang="scss">
     .food-card {
         box-sizing: border-box;
         box-shadow: 0px 0px 18px -7px rgba(0,0,0,0.75);
+        text-decoration: none;
+        color: black;
 
         &__wrapper {
             padding: 26px;
@@ -33,6 +35,11 @@ defineProps<FoodCardType>();
         &__image {
             width: 100%;
             height: auto;
+        }
+
+        &__headline {
+            font-size: 1.3rem;
+            margin: 8px 0;
         }
     }
 </style>
